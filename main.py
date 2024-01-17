@@ -6,12 +6,12 @@ from sqlalchemy.exc import NoResultFound, SQLAlchemyError
 from passlib.hash import pbkdf2_sha256
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, JWTManager
 from schemas import PutSchema, NestedPutSchema, OstecenjeSchema, NestedOstecenjeSchema, UserSchema
-
+import os
 
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///baza.db"
+app.config["SQLALCHEMY_DATABASE_URI"]=os.environ.get("DB_URI","sqlite:///baza.db")
 app.config["JWT_SECRET_KEY"] = "199nudj2i9jf379kocer8ut54ds0"  # Change this!
 jwt = JWTManager(app)
 
@@ -178,4 +178,4 @@ def delete_road(road_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5117)
+    app.run(debug=False)
